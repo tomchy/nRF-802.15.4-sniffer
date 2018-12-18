@@ -95,10 +95,10 @@ class Nrf802154Sniffer(object):
             self.running.clear()
 
             alive_threads = []
-            
+
             for thread in self.threads:
                 try:
-                    thread.join(timeout=10)
+                    thread.join(timeout=180)
                     if thread.is_alive() is True:
                         self.logger.error("Failed to stop a thread")
                         alive_threads.append(thread)
@@ -434,7 +434,7 @@ if is_standalone:
 
     if args.extcap_interfaces:
         print(sniffer_comm.extcap_interfaces())
-    
+
     if args.extcap_dlts:
         print(sniffer_comm.extcap_dlts())
 
@@ -453,4 +453,3 @@ if is_standalone:
             sniffer_comm.extcap_capture(args.fifo, args.dev, channel, args.extcap_control_in, args.extcap_control_out)
         except KeyboardInterrupt as e:
             sniffer_comm.stop_sig_handler()
-
